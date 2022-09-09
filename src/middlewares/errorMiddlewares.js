@@ -7,7 +7,10 @@ const errors = {
 
 const errorMiddleware = (error, req, re, _next) => {
   const { message } = error;
-  re.status(errors[message].status).json({ message: errors[message].message });
+  if (Object.keys(errors).includes(message)) {
+    return re.status(errors[message].status).json({ message: errors[message].message });
+  }
+  return re.status(500).json({ message: 'Internal Server Error' });
 };
 
 module.exports = errorMiddleware;
