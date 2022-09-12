@@ -8,7 +8,7 @@ chai.use(sinonChai);
 const productServices = require('../../../src/services/productServices');
 const productController = require('../../../src/controllers/productController');
 
-describe('Testes de Unidade Para o Product Controller', function () {
+describe('Testes de Unidade de Product Controller', function () {
   it('Retorna todos os produtos', async function () {
     const res = {};
 
@@ -87,6 +87,48 @@ describe('Testes de Unidade Para o Product Controller', function () {
 
     expect(next).to.have.been.calledWith(error);
   })
+
+  it('Post /products', async function () {
+    const res = {};
+    const req = {
+      body: {
+        name: 'Produto de Teste',
+      }
+    };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    sinon.stub(productServices, 'insertProduct').resolves(5);
+
+    await productController.insertProduct(req, res);
+
+    expect(res.status).to.have.been.calledWith(201);
+    expect(res.json).to.have.been.calledWith({
+      id: 5,
+      name: 'Produto de Teste',
+    })
+  });
+
+  it('Post /products com erro', async function () {
+    const res = {};
+    const req = {
+      body: {
+        name: 'Produto de Teste',
+      }
+    };
+    const next = sinon.stub().returns();
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    const error = new Error('INTERNAL_SERVER_ERROR');
+    sinon.stub(productServices, 'insertProduct').throws(error);
+    
+    await productController.insertProduct(req, res, next);
+
+    expect(next).to.have.been.calledWith(error);
+  });
 
   afterEach(sinon.restore);
 })

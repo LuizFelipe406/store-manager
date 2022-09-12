@@ -6,7 +6,7 @@ const { expect } = chai;
 const productServices = require('../../../src/services/productServices');
 const productModels = require('../../../src/models/productModels');
 
-describe('Verificando service de products', function () {
+describe('Testes de Unidade de Product Services', function () {
   it('Testa a função getAllProducts com sucesso', async function () {
     sinon.stub(productModels, 'getAllProducts').resolves([]);
 
@@ -50,6 +50,29 @@ describe('Verificando service de products', function () {
     }
   expect(responseError.message).to.be.equal(error.message);
   });
+
+  it('Testa a função InsertProducts com sucesso', async function () {
+    sinon.stub(productModels, 'insertProduct').resolves({ insertId: 5 });
+
+    const response = await productServices.insertProduct('Produto de Teste');
+
+    expect(response).to.be.equal(5);
+  });
+
+  it('Testa a função InsertProducts com erro', async function () {
+    const error = new Error('INTERNAL_SERVER_ERROR');
+    let responseError = null;
+
+    sinon.stub(productModels, 'insertProduct').resolves({ insertId: undefined });
+
+    try {
+      await productServices.insertProduct('Produto Invalido');
+    } catch (err) {
+      responseError = err;
+    }
+
+    expect(responseError.message).to.be.equal(error.message);
+  })
 
   afterEach(sinon.restore)
 });
