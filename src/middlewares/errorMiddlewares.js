@@ -11,6 +11,18 @@ const errors = {
     status: 422,
     message: '"name" length must be at least 5 characters long',
   },
+  PRODUCT_ID_IS_REQUIRED: {
+    status: 400,
+    message: '"productId" is required',
+  },
+  QUANTITY_IS_REQUIRED: {
+    status: 400,
+    message: '"quantity" is required',
+  },
+  QUANTITY_INVALID: {
+    status: 422,
+    message: '"quantity" must be greater than or equal to 1',
+  },
 };
 
 const errorMiddleware = (error, req, re, _next) => {
@@ -18,6 +30,7 @@ const errorMiddleware = (error, req, re, _next) => {
   if (Object.keys(errors).includes(message)) {
     return re.status(errors[message].status).json({ message: errors[message].message });
   }
+  console.log(error);
   return re.status(500).json({ message: 'Internal Server Error' });
 };
 

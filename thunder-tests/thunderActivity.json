@@ -4,16 +4,16 @@
     "colId": "history",
     "containerId": "",
     "name": "http://localhost:3000/products",
-    "url": "http://localhost:3000/products",
+    "url": "http://localhost:3000/products/25",
     "method": "GET",
     "sortNum": 0,
     "created": "2022-09-09T17:59:32.620Z",
-    "modified": "2022-09-12T17:46:47.766Z",
+    "modified": "2022-09-12T20:26:22.198Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\": \"Luvas do Homem de ferro\"\n}",
+      "raw": "{\n  \"name\": \"batatinha frita\"\n}",
       "form": []
     },
     "tests": []
@@ -27,12 +27,31 @@
     "method": "POST",
     "sortNum": 0,
     "created": "2022-09-12T17:39:38.340Z",
-    "modified": "2022-09-12T18:14:21.555Z",
+    "modified": "2022-09-12T19:00:28.501Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\": \"12345\"\n}",
+      "raw": "{\n  \"name\": \"batatinha frita\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "0a22651f-e134-4a04-9224-61440abb99a7",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/sales",
+    "url": "http://localhost:3000/sales",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2022-09-12T18:47:41.993Z",
+    "modified": "2022-09-12T22:46:46.362Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "[\n  { \n    \"productId\": 1,\n    \"quantity\": 1\n  },\n  {\n    \"productId\": 3,\n    \"quantity\": 5\n  }\n]",
       "form": []
     },
     "tests": []
