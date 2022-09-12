@@ -16,7 +16,16 @@ const getProductById = async (id) => {
   return response;
 };
 
+const insertProduct = async (name) => {
+  const { insertId } = await productModel.insertProduct(name);
+  if (!insertId) {
+    throw new Error('INTERNAL_SERVER_ERROR');
+  }
+  return insertId;
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
+  insertProduct,
 };
