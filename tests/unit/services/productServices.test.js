@@ -73,6 +73,31 @@ describe('Testes de Unidade de Product Services', function () {
 
     expect(responseError.message).to.be.equal(error.message);
   })
+  
+  it('Testa a função InsertProducts sem name', async function () {
+    const error = new Error('NAME_IS_REQUIRED');
+    let responseError = null;
+
+    try {
+      await productServices.insertProduct();
+    } catch (err) {
+      responseError = err;
+    }
+
+    expect(responseError.message).to.be.equal(error.message);
+  })
+  it('Testa a função InsertProducts com name < 5', async function () {
+    const error = new Error('NAME_IS_TOO_SMALL');
+    let responseError = null;
+
+    try {
+      await productServices.insertProduct('1234');
+    } catch (err) {
+      responseError = err;
+    }
+
+    expect(responseError.message).to.be.equal(error.message);
+})
 
   afterEach(sinon.restore)
 });
