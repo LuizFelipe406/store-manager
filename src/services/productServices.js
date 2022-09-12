@@ -17,6 +17,9 @@ const getProductById = async (id) => {
 };
 
 const insertProduct = async (name) => {
+  if (!name) throw new Error('NAME_IS_REQUIRED');
+  if (name.length < 5) throw new Error('NAME_IS_TOO_SMALL');
+
   const { insertId } = await productModel.insertProduct(name);
   if (!insertId) {
     throw new Error('INTERNAL_SERVER_ERROR');

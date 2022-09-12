@@ -27,12 +27,12 @@
     "method": "POST",
     "sortNum": 0,
     "created": "2022-09-12T17:39:38.340Z",
-    "modified": "2022-09-12T17:48:30.864Z",
+    "modified": "2022-09-12T18:14:21.555Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\": \"Luvas do Homem de ferro\"\n}",
+      "raw": "{\n  \"name\": \"12345\"\n}",
       "form": []
     },
     "tests": []
