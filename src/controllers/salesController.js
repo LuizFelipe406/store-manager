@@ -13,6 +13,16 @@ const insertSale = async (req, res, next) => {
   }
 };
 
+const getAllSales = async (req, res, next) => {
+  try {
+    const response = await salesServices.getAllSales();
+    return res.status(200).json(response);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   insertSale,
+  getAllSales,
 };

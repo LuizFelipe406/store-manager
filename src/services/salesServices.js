@@ -1,3 +1,4 @@
+const camelize = require('camelize');
 const salesModels = require('../models/salesModels');
 const productModels = require('../models/productModels');
 
@@ -16,6 +17,13 @@ const insertSale = async (sales) => {
   return insertId;
 };
 
+const getAllSales = async () => {
+  const [response] = await salesModels.getAllSales();
+  if (!response) throw new Error('INTERNAL_SERVER_ERROR');
+  return camelize(response);
+};
+
 module.exports = {
   insertSale,
+  getAllSales,
 };
