@@ -137,5 +137,55 @@ describe('Testes de Unidade de Product Controller', function () {
   });
   
 
+  describe('PUT /products/:id', function () {
+    it('Simula uma requisição com sucesso', async function () {
+      const res = {};
+      const req = {
+        body: {
+          name: 'Produto Atualizado',
+        },
+        params: {
+          id: 1,
+        }
+      };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon.stub(productServices, 'updateProduct').resolves();
+
+      await productController.updateProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith({
+        id: 1,
+        name: 'Produto Atualizado',
+      })
+    });
+    
+    it('Simula um requisição com erro', async function () {
+      const res = {};
+      const req = {
+        body: {
+          name: 'Produto com Erro',
+        },
+        params: {
+          id: 9999,
+        }
+      };
+      const next = sinon.stub().returns();
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      const error = new Error('INTERNAL_SERVER_ERROR');
+      sinon.stub(productServices, 'updateProduct').throws(error);
+      
+      await productController.updateProduct(req, res, next);
+
+      expect(next).to.have.been.calledWith(error);
+    });
+  });
+
   afterEach(sinon.restore);
 })

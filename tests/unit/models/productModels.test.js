@@ -21,12 +21,20 @@ describe('Testes de Unidade de Product Models', function () {
     expect(response).to.be.deep.equal('produto buscado');
   });
 
-  it('Testa a função InsertProduct', async function() {
+  it('Testa a função insertProduct', async function() {
     sinon.stub(connection, 'execute').resolves([{ insertId: 5 }]);
 
     const response = await productModels.insertProduct('Produto Teste');
 
     expect(response.insertId).to.be.equal(5);
+  });
+
+  it('Testa a função updateProducts', async function () {
+    sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+
+    const response = await productModels.updateProduct(1, 'Produto Atualizado');
+
+    expect(response.affectedRows).to.be.equal(1);
   });
 
   afterEach(sinon.restore);

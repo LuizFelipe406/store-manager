@@ -39,6 +39,8 @@ const updateProduct = async (id, name) => {
 
   const { affectedRows } = await productModel.updateProduct(id, name);
   if (affectedRows === 0) throw new Error('PRODUCT_NOT_FOUND');
+
+  return true;
 };
 
 module.exports = {
