@@ -1,5 +1,11 @@
 const productModel = require('../models/productModels');
 
+const validateProductName = (name) => {
+  if (!name) return { status: false, message: 'NAME_IS_REQUIRED' };
+  if (name.length < 5) return { status: false, message: 'NAME_IS_TOO_SMALL' };
+  return { status: true };
+};
+
 const getAllProducts = async () => {
   const response = await productModel.getAllProducts();
   if (!response) {
@@ -17,8 +23,8 @@ const getProductById = async (id) => {
 };
 
 const insertProduct = async (name) => {
-  if (!name) throw new Error('NAME_IS_REQUIRED');
-  if (name.length < 5) throw new Error('NAME_IS_TOO_SMALL');
+  const isNameValid = validateProductName(name);
+  if (!isNameValid.status) throw new Error(isNameValid.message);
 
   const { insertId } = await productModel.insertProduct(name);
   if (!insertId) {
@@ -27,8 +33,17 @@ const insertProduct = async (name) => {
   return insertId;
 };
 
+const updateProduct = async (id, name) => {
+  const isNameValid = validateProductName(name);
+  if (!isNameValid.status) throw new Error(isNameValid.message);
+
+  const { affectedRows } = await productModel.updateProduct(id, name);
+  if (affectedRows === 0) throw new Error('PRODUCT_NOT_FOUND');
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
   insertProduct,
+  updateProduct,
 };
