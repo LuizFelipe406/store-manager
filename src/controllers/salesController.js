@@ -16,7 +16,17 @@ const insertSale = async (req, res, next) => {
 const getAllSales = async (req, res, next) => {
   try {
     const response = await salesServices.getAllSales();
-    return res.status(200).json(response);
+    res.status(200).json(response);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getSaleById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const response = await salesServices.getSaleById(id);
+    res.status(200).json(response);
   } catch (err) {
     next(err);
   }
@@ -25,4 +35,5 @@ const getAllSales = async (req, res, next) => {
 module.exports = {
   insertSale,
   getAllSales,
+  getSaleById,
 };

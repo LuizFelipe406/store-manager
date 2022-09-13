@@ -23,7 +23,14 @@ const getAllSales = async () => {
   return camelize(response);
 };
 
+const getSaleById = async (id) => {
+  const [response] = await salesModels.getSaleById(id);
+  if (response.length === 0) throw new Error('SALE_NOT_FOUND');
+  return camelize(response);
+};
+
 module.exports = {
   insertSale,
   getAllSales,
+  getSaleById,
 };

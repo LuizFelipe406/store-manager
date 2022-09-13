@@ -23,6 +23,10 @@ const errors = {
     status: 422,
     message: '"quantity" must be greater than or equal to 1',
   },
+  SALE_NOT_FOUND: {
+    status: 404,
+    message: 'Sale not found',
+  },
 };
 
 const errorMiddleware = (error, req, re, _next) => {
