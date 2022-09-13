@@ -8,7 +8,8 @@ const salesModels = require('../../../src/models/salesModels');
 const productModels = require('../../../src/models/productModels');
 
 describe('Testes de Unidade de Sales Services', function () {
-  it('Testa a função Insert Sale com sucesso', async function () {
+  describe('Função insertSale', function () {
+    it('com sucesso', async function () {
     sinon.stub(salesModels, 'insertSale').resolves(5);
     sinon.stub(productModels, 'getProductById').resolves([true]);
 
@@ -16,7 +17,8 @@ describe('Testes de Unidade de Sales Services', function () {
 
     expect(response).to.be.equal(5);
   });
-  it('Testa a função Insert Sale sem productId', async function () {
+
+  it('sem productId', async function () {
     const error = new Error('PRODUCT_ID_IS_REQUIRED');
     let errorResponse;
     sinon.stub(salesModels, 'insertSale').resolves(5);
@@ -29,7 +31,8 @@ describe('Testes de Unidade de Sales Services', function () {
     }
     expect(errorResponse.message).to.be.equal(error.message);
   });
-  it('Testa a função Insert Sale com quantity invalida', async function () {
+
+  it('com quantity invalida', async function () {
     const error = new Error('QUANTITY_INVALID');
     let errorResponse;
     sinon.stub(salesModels, 'insertSale').resolves(5);
@@ -42,7 +45,8 @@ describe('Testes de Unidade de Sales Services', function () {
     }
     expect(errorResponse.message).to.be.equal(error.message);
   });
-  it('Testa a função Insert Sale sem quantity', async function () {
+
+  it('sem quantity', async function () {
     const error = new Error('QUANTITY_IS_REQUIRED');
     let errorResponse;
     sinon.stub(salesModels, 'insertSale').resolves(5);
@@ -55,7 +59,8 @@ describe('Testes de Unidade de Sales Services', function () {
     }
     expect(errorResponse.message).to.be.equal(error.message);
   });
-  it('Testa a função Insert Sale com productId invalido', async function () {
+
+  it('com productId invalido', async function () {
     const error = new Error('PRODUCT_NOT_FOUND');
     let errorResponse;
     sinon.stub(salesModels, 'insertSale').resolves(5);
@@ -68,5 +73,57 @@ describe('Testes de Unidade de Sales Services', function () {
     }
     expect(errorResponse.message).to.be.equal(error.message);
   });
+  });
+  
+  describe('Função getAllSales', function () {
+    it('Com sucesso', async function () {
+      sinon.stub(salesModels, 'getAllSales').resolves([{
+        todas_as_vendas: []
+      }]);
+
+      const response = await salesServices.getAllSales();
+
+      expect(response).to.be.deep.equal({todasAsVendas: []});
+    });
+
+    it('Com erro', async function () {
+      const error = new Error('INTERNAL_SERVER_ERROR');
+      let errorReponse;
+      sinon.stub(salesModels, 'getAllSales').resolves([undefined]);
+
+      try {
+        await salesServices.getAllSales();
+      } catch (err) {
+        errorReponse = err;
+      }
+
+      expect(errorReponse.message).to.be.equal(error.message);
+    });
+  });
+
+  describe('Função getSalesById', function () {
+    it('Com Sucesso', async function () {
+      sinon.stub(salesModels, 'getSaleById').resolves(['venda com id 1']);
+
+      const response = await salesServices.getSaleById(1);
+
+      expect(response).to.be.equal('venda com id 1');
+    });
+
+    it('Com Erro', async function () {
+      const error = new Error('SALE_NOT_FOUND');
+      let errorReponse;
+      sinon.stub(salesModels, 'getSaleById').resolves([[]]);
+
+      try {
+        await salesServices.getSaleById(9999);
+      } catch (err) {
+        errorReponse = err;
+      }
+
+      expect(errorReponse.message).to.be.equal(error.message);
+    });
+  });
+
   afterEach(sinon.restore);
 });

@@ -12,4 +12,22 @@ describe('Testes de Unidade para Sales Models', function () {
     const response = await salesModels.insertSale([{ productId: 1, quantity: 1 }]);
     expect(response).to.be.equal(5);
   });
+
+  it('Testa a função getAllSales', async function () {
+    sinon.stub(connection, 'execute').resolves([]);
+
+    const response = await salesModels.getAllSales();
+
+    expect(response).to.be.deep.equal([]);
+  });
+
+  it('Testa a função getSalesById', async function () {
+    sinon.stub(connection, 'execute').resolves([]);
+
+    const response = await salesModels.getSaleById(1);
+
+    expect(response).to.be.deep.equal([]);
+  });
+
+  afterEach(sinon.restore);
 });

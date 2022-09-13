@@ -49,5 +49,74 @@ describe('Testes de Unidade de Product Controller', function () {
       expect(next).to.have.been.calledWith(error);
     });
   })
+  describe('GET /sales', function () {
+    it('Requisição com sucesso', async function () {
+      const res = {};
+      const req = {};
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon.stub(salesServices, 'getAllSales').resolves([]);
+
+      await salesController.getAllSales(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith([]);
+    });
+
+    it('Requisição com erro', async function () {
+      const res = {};
+      const req = {};
+      const next = sinon.stub().returns();
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      const error = new Error('INTERNAL_SERVER_ERROR')
+      sinon.stub(salesServices, 'getAllSales').throws(error);
+
+      await salesController.getAllSales(req, res, next);
+
+      expect(next).to.have.been.calledWith(error);
+    });
+  });
+
+  describe('GET /sales/:id', function () {
+    it('Requisição com sucesso', async function () {
+      const res = {};
+      const req = {
+        params: 1,
+      };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon.stub(salesServices, 'getSaleById').resolves([]);
+
+      await salesController.getSaleById(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith([]);
+    });
+
+    it('Requisição com erro', async function () {
+      const res = {};
+      const req = {
+        params: 9999,
+      };
+      const next = sinon.stub().returns();
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      const error = new Error('SALE_NOT_FOUND')
+      sinon.stub(salesServices, 'getSaleById').throws(error);
+
+      await salesController.getSaleById(req, res, next);
+
+      expect(next).to.have.been.calledWith(error);
+    });
+  });
   afterEach(sinon.restore);
 });
