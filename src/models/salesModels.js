@@ -31,7 +31,7 @@ const getAllSales = async () => {
 const getSaleById = async (id) => {
   const response = await connection.execute(
     `SELECT
-    sp.sale_id, sa.date, sp.product_id, sp.quantity
+    sa.date, sp.product_id, sp.quantity
     FROM StoreManager.sales as sa
     JOIN StoreManager.sales_products as sp
     ON sa.id = sp.sale_id
