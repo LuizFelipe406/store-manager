@@ -37,5 +37,13 @@ describe('Testes de Unidade de Product Models', function () {
     expect(response.affectedRows).to.be.equal(1);
   });
 
+  it('Testa a função deleteProducts', async function () {
+    sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+
+    const response = await productModels.deleteProduct(1);
+
+    expect(response.affectedRows).to.be.equal(1);
+  });
+
   afterEach(sinon.restore);
 });

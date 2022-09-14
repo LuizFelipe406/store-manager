@@ -187,5 +187,46 @@ describe('Testes de Unidade de Product Controller', function () {
     });
   });
 
+  describe('DELETE /products/:id', function () {
+    it('Faz uma Requisição com sucesso', async function () {
+      const res = {};
+      const req = {
+        params: {
+          id: 1,
+        }
+      };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon.stub(productServices, 'deleteProduct').resolves();
+
+      await productController.deleteProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(204);
+      expect(res.json).to.have.been.calledWith();
+    });
+
+    it('Faz uma Requisição com id inexistente', async function () {
+      const res = {};
+      const req = {
+        params: {
+          id: 9999,
+        }
+      };
+      const next = sinon.stub().returns();
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      const error = new Error('PRODUCT_NOT_FOUND');
+      sinon.stub(productServices, 'deleteProduct').throws(error);
+      
+      await productController.deleteProduct(req, res, next);
+
+      expect(next).to.have.been.calledWith(error);
+    });
+  });
+
   afterEach(sinon.restore);
 })

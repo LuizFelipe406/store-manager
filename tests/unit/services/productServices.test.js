@@ -155,5 +155,29 @@ describe('Testes de Unidade de Product Services', function () {
     });
   });
 
+  describe('Testa a função deleteProduct', function () {
+    it('Com sucesso', async function () {
+      sinon.stub(productModels, 'deleteProduct').resolves({ affectedRows: 1 })
+
+      const response = await productServices.deleteProduct(1);
+
+      expect(response).to.be.equal(true);
+    });
+
+    it('Com id Inexistente', async function () {
+      const error = new Error('PRODUCT_NOT_FOUND');
+      let errorResponse;
+      sinon.stub(productModels, 'deleteProduct').resolves({ affectedRows: 0 });
+
+      try {
+        await productServices.deleteProduct(9999);
+      } catch (err) {
+        errorResponse = err;
+      }
+
+      expect(errorResponse.message).to.be.equal(error.message);
+    });
+  });
+
   afterEach(sinon.restore)
 });
