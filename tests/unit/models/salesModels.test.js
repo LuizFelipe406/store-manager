@@ -29,5 +29,13 @@ describe('Testes de Unidade para Sales Models', function () {
     expect(response).to.be.deep.equal([]);
   });
 
+  it('Testa a função deleteSale', async function () {
+    sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+
+    const response = await salesModels.deleteSale(1);
+
+    expect(response.affectedRows).to.be.equal(1);
+  });
+
   afterEach(sinon.restore);
 });

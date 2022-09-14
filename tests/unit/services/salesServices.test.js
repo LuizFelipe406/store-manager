@@ -125,5 +125,27 @@ describe('Testes de Unidade de Sales Services', function () {
     });
   });
 
+  describe('Função deleteSale', function () {
+    it('Testa a função com sucesso', async function () {
+      sinon.stub(salesModels, 'deleteSale').resolves({ affectedRows: 1 });
+
+      const response = await salesServices.deleteSale(1);
+
+      expect(response).to.be.equal(true);
+    });
+    it('Testa a função com id inexistente', async function () {
+      const error = new Error('SALE_NOT_FOUND');
+      let errorReponse;
+      sinon.stub(salesModels, 'deleteSale').resolves({ affectedRows: 0 });
+
+      try {
+        await salesServices.deleteSale(9999);
+      } catch (err) {
+        errorReponse = err;
+      }
+      expect(errorReponse.message).to.be.equal(error.message);
+    });
+  });
+
   afterEach(sinon.restore);
 });

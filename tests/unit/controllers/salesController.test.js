@@ -48,7 +48,8 @@ describe('Testes de Unidade de Product Controller', function () {
 
       expect(next).to.have.been.calledWith(error);
     });
-  })
+  });
+
   describe('GET /sales', function () {
     it('Requisição com sucesso', async function () {
       const res = {};
@@ -103,7 +104,9 @@ describe('Testes de Unidade de Product Controller', function () {
     it('Requisição com erro', async function () {
       const res = {};
       const req = {
-        params: 9999,
+        params: {
+          id: 9999,
+        },
       };
       const next = sinon.stub().returns();
 
@@ -118,5 +121,45 @@ describe('Testes de Unidade de Product Controller', function () {
       expect(next).to.have.been.calledWith(error);
     });
   });
-  afterEach(sinon.restore);
-});
+
+  describe('DELETE /sales/:id', function () {
+    it('Faz uma Requisição com sucesso', async function () {
+      const res = {};
+      const req = {
+        params: 1,
+      };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon.stub(salesServices, 'deleteSale').resolves();
+
+      await salesController.deleteSale(req, res);
+
+      expect(res.status).to.have.been.calledWith(204);
+      expect(res.json).to.have.been.calledWith();
+    });
+    
+    it('Faz uma Requisição com id inexistente', async function () {
+      const res = {};
+      const req = {
+        params: {
+          id: 9999
+        },
+      };
+      const next = sinon.stub().returns();
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      const error = new Error('SALE_NOT_FOUND')
+      sinon.stub(salesServices, 'deleteSale').throws(error);
+
+      await salesController.deleteSale(req, res, next);
+
+      expect(next).to.have.been.calledWith(error);
+    });
+  });
+    afterEach(sinon.restore);
+  });
+
