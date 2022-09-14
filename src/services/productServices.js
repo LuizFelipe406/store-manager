@@ -50,10 +50,19 @@ const deleteProduct = async (id) => {
   return true;
 };
 
+const getProductsByTerm = async (q) => {
+  const response = await productModel.getProductsByTerm(q);
+  if (response.length === 0) {
+    throw new Error('PRODUCT_NOT_FOUND');
+  }
+  return response;
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
   insertProduct,
   updateProduct,
   deleteProduct,
+  getProductsByTerm,
 };

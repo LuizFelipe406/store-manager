@@ -4,13 +4,19 @@
     "colId": "history",
     "containerId": "",
     "name": "http://localhost:3000/products",
-    "url": "http://localhost:3000/sales",
+    "url": "http://localhost:3000/products/search?q=art",
     "method": "GET",
     "sortNum": 0,
     "created": "2022-09-09T17:59:32.620Z",
-    "modified": "2022-09-14T18:38:03.507Z",
+    "modified": "2022-09-14T19:26:35.255Z",
     "headers": [],
-    "params": [],
+    "params": [
+      {
+        "name": "q",
+        "value": "art",
+        "isPath": false
+      }
+    ],
     "body": {
       "type": "json",
       "raw": "[\n  {\n    \"productId\": 1,\n    \"quantity\": 10\n  },\n  {\n    \"productId\": 2,\n    \"quantity\": 50\n  }\n]",

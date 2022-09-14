@@ -9,6 +9,21 @@ const getProducts = async (req, res, next) => {
   }
 };
 
+const getProductsByTerm = async (req, res, next) => {
+  try {
+    const { q } = req.query;
+    let response;
+    if (q.length === 0) {
+      response = await productServices.getAllProducts();
+    } else {
+      response = await productServices.getProductsByTerm(q);
+    }
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getProductById = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -59,4 +74,5 @@ module.exports = {
   insertProduct,
   updateProduct,
   deleteProduct,
+  getProductsByTerm,
 };
