@@ -6,9 +6,9 @@ A API construída é um sistema de gerenciamento de vendas no formato dropshippi
 
 **:warning: Antes de começar, seu docker-compose precisa estar na versão 1.29 ou superior. [Veja aqui](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04-pt) ou [na documentação](https://docs.docker.com/compose/install/) como instalá-lo.
 
-> :information_source: Clone o Repositório com o comando `git clone git@github.com:luizfelipe406/store-manager.git`
+:information_source: Clone o Repositório com o comando `git clone git@github.com:luizfelipe406/store-manager.git`
 
-> :information_source: Entre na pasta do repositório que você acabou de clonar:
+:information_source: Entre na pasta do repositório que você acabou de clonar:
   - `cd store-manager`
  
 :information_source: Rode os serviços `node` e `db` com o comando `docker-compose up -d`.
