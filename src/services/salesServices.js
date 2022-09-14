@@ -52,6 +52,7 @@ const updateSale = async (id, items) => {
   if (isSaleExist.length === 0) throw new Error('SALE_NOT_FOUND');
   
   await salesModels.updateSale(id, items);
+  return true;
 };
 
 module.exports = {

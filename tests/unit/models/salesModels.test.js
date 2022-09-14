@@ -37,5 +37,14 @@ describe('Testes de Unidade para Sales Models', function () {
     expect(response.affectedRows).to.be.equal(1);
   });
 
+  it('Testa a função updateSale', async function () {
+    sinon.stub(connection, 'execute').onFirstCall().resolves([{ affectedRows: 1 }])
+      .onSecondCall().resolves([{ productId: 1, quantity: 2 }]);
+    
+    const [response] = await salesModels.updateSale(1, [{ productId: 1, quantity: 2 }]);
+
+    expect(response).to.be.deep.equal({ productId: 1, quantity: 2 });
+  });
+
   afterEach(sinon.restore);
 });

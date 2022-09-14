@@ -147,5 +147,55 @@ describe('Testes de Unidade de Sales Services', function () {
     });
   });
 
+  describe('Função updateSale', function () {
+    it('com sucesso', async function () {
+      sinon.stub(productModels, 'getProductById').resolves([true]);
+      sinon.stub(salesModels, 'getSaleById').resolves([['venda']]);
+      sinon.stub(salesModels, 'updateSale').resolves();
+
+      const response = await salesServices.updateSale(1, [{
+        productId: 1,
+        quantity: 1,
+      }]);
+
+      expect(response).to.be.equal(true);
+    });
+    it('com erro na request', async function () {
+      sinon.stub(productModels, 'getProductById').resolves([true]);
+      sinon.stub(salesModels, 'getSaleById').resolves([['venda']]);
+      sinon.stub(salesModels, 'updateSale').resolves();
+      const error = new Error('PRODUCT_ID_IS_REQUIRED');
+      let errorResponse;
+
+      try {
+        await salesServices.updateSale(1, [{
+        quantity: 1,
+      }]);
+      } catch (err) {
+        errorResponse = err;
+      }
+
+      expect(errorResponse.message).to.be.equal(error.message);
+    });
+    it('com id da venda inexistente', async function () {
+      sinon.stub(productModels, 'getProductById').resolves([true]);
+      sinon.stub(salesModels, 'getSaleById').resolves([[]]);
+      sinon.stub(salesModels, 'updateSale').resolves();
+      const error = new Error('SALE_NOT_FOUND');
+      let errorResponse;
+
+      try {
+        await salesServices.updateSale(1, [{
+        productId: 1,
+        quantity: 1,
+      }]);
+      } catch (err) {
+        errorResponse = err;
+      }
+
+      expect(errorResponse.message).to.be.equal(error.message);
+    });
+  });
+
   afterEach(sinon.restore);
 });

@@ -126,7 +126,9 @@ describe('Testes de Unidade de Product Controller', function () {
     it('Faz uma Requisição com sucesso', async function () {
       const res = {};
       const req = {
-        params: 1,
+        params: {
+          id: 1
+        },
       };
 
       res.status = sinon.stub().returns(res);
@@ -156,6 +158,52 @@ describe('Testes de Unidade de Product Controller', function () {
       sinon.stub(salesServices, 'deleteSale').throws(error);
 
       await salesController.deleteSale(req, res, next);
+
+      expect(next).to.have.been.calledWith(error);
+    });
+  });
+
+  describe('PUT /sales/:id', function () {
+    it('Faz uma Request com sucesso', async function () {
+      const res = {};
+      const req = {
+        params: {
+          id: 1,
+        },
+        body: [],
+      };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon.stub(salesServices, 'updateSale').resolves();
+
+      await salesController.updateSale(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith({
+        saleId: 1,
+        itemsUpdated: [],
+      });
+    });
+
+    it('Faz uma request com erro', async function () {
+      const res = {};
+      const req = {
+        params: {
+          id: 9999
+        },
+        body: [],
+      };
+      const next = sinon.stub().returns();
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      const error = new Error('SALE_NOT_FOUND')
+      sinon.stub(salesServices, 'updateSale').throws(error);
+
+      await salesController.updateSale(req, res, next);
 
       expect(next).to.have.been.calledWith(error);
     });
