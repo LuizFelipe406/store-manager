@@ -29,8 +29,14 @@ const getSaleById = async (id) => {
   return camelize(response);
 };
 
+const deleteSale = async (id) => {
+  const { affectedRows } = await salesModels.deleteSale(id);
+  if (affectedRows === 0) throw new Error('SALE_NOT_FOUND');
+};
+
 module.exports = {
   insertSale,
   getAllSales,
   getSaleById,
+  deleteSale,
 };
