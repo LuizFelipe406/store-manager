@@ -18,7 +18,9 @@ A API construída é um sistema de gerenciamento de vendas no formato dropshippi
 - Ele te dará acesso ao terminal interativo do container criado pelo compose, que está rodando em segundo plano.
 
 > :information_source: Instale as dependências com `npm install`
+
 > :information_source: Para iniciar o projeto -> `npm install`
+
 > :information_source: Para Verificar a cobertura de testes -> `npm run test:mocha`
 
 <!-- Olá, Tryber!
