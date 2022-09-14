@@ -179,5 +179,28 @@ describe('Testes de Unidade de Product Services', function () {
     });
   });
 
+  describe('Testa a função getProductsByTerm', function () {
+    it('com sucesso', async function () {
+      sinon.stub(productModels, 'getProductsByTerm').resolves(['produto buscado']);
+
+      const response = await productServices.getProductsByTerm('produto');
+
+      expect(response).to.be.deep.equal(['produto buscado']);
+    });
+    it('produto inexistente', async function () {
+      const error = new Error('PRODUCT_NOT_FOUND');
+      let errorResponse;
+
+      sinon.stub(productModels, 'getProductsByTerm').resolves([]);
+
+      try {
+        await productServices.getProductsByTerm('produto inexistente');
+      } catch (err) {
+        errorResponse = err;
+      }
+      expect(errorResponse.message).to.be.equal(error.message);
+    });
+  });
+
   afterEach(sinon.restore)
 });

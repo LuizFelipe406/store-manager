@@ -228,5 +228,69 @@ describe('Testes de Unidade de Product Controller', function () {
     });
   });
 
+  describe('GET /products/sales', function () {
+    it('Faz uma requisição com sucesso', async function () {
+      const res = {};
+
+      const req = {
+        query: {
+          q: 'produto',
+      }};
+
+      res.status = sinon.stub().returns(res);
+
+      res.json = sinon.stub().returns();
+
+      sinon.stub(productServices, 'getProductsByTerm').resolves([]);
+
+      await productController.getProductsByTerm(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+
+      expect(res.json).to.have.been.calledWith([]);
+    });
+
+    it('Faz uma requisição com sucesso e query vazia', async function () {
+      const res = {};
+
+      const req = {
+        query: {
+          q: '',
+      }};
+
+      res.status = sinon.stub().returns(res);
+
+      res.json = sinon.stub().returns();
+
+      sinon.stub(productServices, 'getAllProducts').resolves([]);
+
+      await productController.getProductsByTerm(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+
+      expect(res.json).to.have.been.calledWith([]);
+    });
+    it('Faz uma Requisição com query invalida', async function () {
+      const res = {};
+
+      const req = {
+        query: {
+          q: 'produto inexistente',
+      }};
+      const next = sinon.stub().returns();
+
+      res.status = sinon.stub().returns(res);
+
+      res.json = sinon.stub().returns();
+
+      const error = new Error('PRODUCT_NOT_FOUND');
+      sinon.stub(productServices, 'getProductsByTerm').throws(error);
+
+      await productController.getProductsByTerm(req, res, next);
+
+      expect(next).to.have.been.calledWith(error);
+  })
+  });
+
   afterEach(sinon.restore);
 })

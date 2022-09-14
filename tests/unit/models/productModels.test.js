@@ -45,5 +45,13 @@ describe('Testes de Unidade de Product Models', function () {
     expect(response.affectedRows).to.be.equal(1);
   });
 
+  it('Testa a função getProductsByTerm', async function () {
+    sinon.stub(connection, 'execute').resolves(['produto buscado']);
+
+    const response = await productModels.getProductsByTerm('produto');
+
+    expect(response).to.be.equal('produto buscado');
+  });
+
   afterEach(sinon.restore);
 });
