@@ -50,9 +50,25 @@ const deleteSale = async (id) => {
   return response;
 };
 
+const updateSale = async (id, items) => {
+  await connection.execute(
+    'DELETE FROM StoreManager.sales_products WHERE sale_id = ?',
+    [id],
+  );
+  await Promise.all(items.map(async (sale) => {
+    await connection.execute(
+      `INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity)
+      VALUES (?, ?, ?)`,
+      [id, sale.productId, sale.quantity],
+    );
+    return sale;
+  }));
+};
+
 module.exports = {
   insertSale,
   getAllSales,
   getSaleById,
   deleteSale,
+  updateSale,
 };
