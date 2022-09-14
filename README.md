@@ -13,7 +13,7 @@ A API construída é um sistema de gerenciamento de vendas no formato dropshippi
  
 :information_source: Rode os serviços `node` e `db` com o comando `docker-compose up -d`.
 
-> :information_source: Use o comando `docker exec -it store_manager bash` e sigas passos abaixo.
+:information_source: Use o comando `docker exec -it store_manager bash` e sigas passos abaixo.
 
 - Ele te dará acesso ao terminal interativo do container criado pelo compose, que está rodando em segundo plano.
 
