@@ -1,5 +1,5 @@
 # Boas-vindas ao repositório do Projeto Store Manager
-A API construída é um sistema de gerenciamento de vendas no formato dropshipping em que será possível criar, visualizar, deletar e atualizar produtos e vendas. foi o banco de dados MySQL para a gestão de dados. Além disso, a API é RESTful e segue o modelo arquitetural MSC.
+A API construída é um sistema de gerenciamento de vendas no formato dropshipping em que será possível criar, visualizar, deletar e atualizar produtos e vendas. foi utilizado o banco de dados MySQL para a gestão de dados. Além disso, a API é RESTful e segue o modelo arquitetural MSC.
 
 # Como rodar:
 ### 👉 Com Docker
